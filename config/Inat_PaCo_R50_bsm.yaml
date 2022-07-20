@@ -1,0 +1,64 @@
+dataset: iNaturalist
+feat_dir: features/inat/paco/
+backbone_weight_path: features/inat/paco/moco_ckpt.best.pth.tar
+
+max_depth: 3
+
+gmflow:
+  model:
+    n_blocks: 2
+    n_hidden: 1
+    num_cluster: 500
+    gmm_center_std: 0.05
+  data:
+    batchsize:  1024
+    weight_q:        2.0
+    num_workers:     8
+  optim:
+    lr:    0.2
+    epoch: 30
+    momentum: 0
+  loss:
+    lambda_lh:       1.
+    lambda_balance:  1.
+    lambda_purity:   0.02
+    posterior_momentum: 0.7
+    contrast_type:   soft_ce
+    contrast_freeze: true
+
+
+
+filter:
+  llh_proportion: 0.3
+
+
+cacls:
+  eval_freq: 5
+  model:
+    type: linear
+    inputs: XZP
+  loss: 
+    type: BSM
+    label_smoothing: 0
+  data:
+    batchsize: 128
+  optim:
+    lr:    1.0e-4 # 1.0e-2
+    epoch: 150
+    momentum: 0
+    
+
+regcls:
+  eval_freq: 5
+  model:
+    type: linear
+    inputs: XZ
+  loss: 
+    type: BSM
+    label_smoothing: 0
+  data:
+    batchsize: 128
+  optim:
+    lr:    1.0e-4 # 1.0e-2
+    epoch: 150
+    momentum: 0

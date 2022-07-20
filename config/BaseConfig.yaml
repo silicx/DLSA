@@ -1,0 +1,94 @@
+device: cuda
+dataset: null  # "ImageNet", "Places", "iNaturalist"
+root_dir: ./logs
+feat_dir: null # contains feature files
+data_dir: null # contains image files
+backbone_weight_path: null # pretrained backbone file
+
+max_depth: null
+
+gmflow:
+  save_freq: 100
+  model:
+    n_blocks: 2
+    n_hidden: 1
+    input_order: sequential  # sequential, random
+    num_cluster: null
+    gmm_center_std: null
+    batch_norm: true
+  data:
+    weight_q:    null
+    num_workers: 8
+    batchsize:   null
+  optim:
+    lr:    null
+    epoch: null
+    momentum: 0
+    warmup_epochs: 0
+    cos_lr: False
+    steps: [] 
+    grad_clip: False
+  loss:
+    lambda_lh:       null
+    lambda_balance:  null
+    lambda_purity:   null
+    posterior_momentum: null
+    contrast_type:   null
+    contrast_margin: null
+    contrast_freeze: null
+
+filter:
+  llh_thres: null # min llh of well clustered samples
+  llh_proportion: null # proportion of well clustered samples (e.g. 0.3 = 30% samples are sent to labelmapping)
+  min_purity: 0.7
+  min_size:   10 # min cluster size
+
+cacls:
+  eval_freq: 100
+  model:
+    type: null  # linear, cosine
+    inputs: null  # XZP, XZ
+    hidden_layers: []
+    batch_norm: true
+    weight_decay: 0
+  loss:
+    type: null  # CE, BSM
+    label_smoothing: 0
+  data:
+    sampler: 
+      name: null
+      num_samples_cls: null
+    batchsize: null
+    num_workers: 0
+  optim:
+    lr:    null
+    epoch: null
+    momentum: 0
+    warmup_epochs: 0
+    cos_lr: false
+    steps: []
+
+regcls:
+  eval_freq: 100
+  model:
+    type: null  # linear, cosine
+    inputs: null  # XZP, XZ
+    hidden_layers: []
+    batch_norm: true
+    weight_decay: 0
+  loss: 
+    type: null  # CE, BSM
+    label_smoothing: 0
+  data:
+    sampler:
+      name: null
+      num_samples_cls: null
+    batchsize: null
+    num_workers: 0
+  optim:
+    lr:    null
+    epoch: null
+    momentum: 0
+    warmup_epochs: 0
+    cos_lr: false
+    steps: []

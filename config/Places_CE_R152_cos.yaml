@@ -1,0 +1,65 @@
+dataset: Places_LT
+feat_dir: features/places/ce/
+backbone_weight_path: null #features/places/ce/resnet152_uniform_converted.pth
+
+max_depth: 1
+
+
+gmflow:
+  model:
+    n_blocks: 2
+    n_hidden: 1
+    num_cluster: 500
+    gmm_center_std: 0.05
+  data:
+    batchsize:  512
+    weight_q:        2.0
+    num_workers:     8
+  optim:
+    lr:    0.2
+    epoch: 60
+    momentum: 0
+  loss:
+    lambda_lh:       1.
+    lambda_balance:  2.
+    lambda_purity:   0.03
+    posterior_momentum: 0.7
+    contrast_type:   soft_ce
+    contrast_freeze: true
+
+
+
+filter:
+  llh_proportion: 0.3
+
+
+cacls:
+  eval_freq: 5
+  model:
+    type: cosine
+    inputs: XZP
+  loss: 
+    type: CE
+    label_smoothing: 0
+  data:
+    batchsize: 128
+  optim:
+    lr:    1.0e-2
+    epoch: 150
+    momentum: 0
+    
+
+regcls:
+  eval_freq: 5
+  model:
+    type: cosine
+    inputs: XZ
+  loss: 
+    type: CE
+    label_smoothing: 0
+  data:
+    batchsize: 128
+  optim:
+    lr:    1.0e-2
+    epoch: 150
+    momentum: 0
